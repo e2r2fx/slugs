@@ -1,0 +1,30 @@
+{
+  "name": "slugs",
+  "version": "1.0.0",
+  "description": "Slugify a list of names",
+  "main": "src/server.ts",
+  "scripts": {
+    "begin-slugging:dev": "ts-node-dev --respawn src/slugs.ts",
+    "build": "tsc"
+  },
+  "author": "e2r2fx",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^16.11.26",
+    "@typescript-eslint/eslint-plugin": "^5.17.0",
+    "@typescript-eslint/parser": "^5.17.0",
+    "eslint": "^8.12.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "prettier": "^2.6.1",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.6.3"
+  },
+  "engines": {
+    "node": "^16.14.2"
+  }
+}
