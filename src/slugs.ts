@@ -7,7 +7,7 @@ import progress from 'progress-stream';
 import { streamValues } from 'stream-json/streamers/StreamValues';
 import cliProgress from 'cli-progress';
 
-const stat = fs.statSync('./src/data.json');
+const stat = fs.statSync('./src/data/slugs.json');
 const progressStream = progress({ length: stat.size, time: 100 });
 
 const progressBar = new cliProgress.SingleBar(
@@ -37,10 +37,10 @@ const slugifyStream = async (data: { value: string[] }) => {
     .join(`,\n`);
 };
 
-const writeStream = fs.createWriteStream('./output.csv');
+const writeStream = fs.createWriteStream('./outputSlugs.csv');
 
 chain([
-  fs.createReadStream('./src/data.json', {
+  fs.createReadStream('./src/slugs.json', {
     flags: 'r',
     encoding: 'utf-8',
   }),

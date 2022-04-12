@@ -3,3 +3,4 @@
 ./package-lock.json
 /dist/
 /output.csv
+/src/output/
