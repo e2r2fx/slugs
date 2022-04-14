@@ -1,21 +1,32 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const fs = require('fs');
+import fs from 'fs';
+
+export {};
 
 const data = fs.readFileSync('./src/data/categories.json', 'utf-8');
 const brickTemplate = fs.readFileSync('./src/templates/brick.html', 'utf-8');
 
 let categoryPaths = JSON.parse(data.toString());
 
+type Category = {
+  title: string;
+  url: string;
+  level: number;
+  children: Category[];
+};
+
 // Removed duplicated finalCategories
 categoryPaths = [...new Set(categoryPaths)];
-const categoryTree = [];
+const categoryTree = <Category[]>{};
 const level = { categoryTree };
 
-categoryPaths.forEach((categoryPath) => {
+categoryPaths.forEach((categoryPath: string) => {
   const categoryPathArray = categoryPath.split('/');
-  categoryPathArray.reduce(
-    (previousCategory, currentCategory, currentIndex) => {
+  categoryPathArray.reduce<Record<Category, string>>(
+    (previousCategory, currentCategory: string, currentIndex) => {
+      // @ts-ignore
       if (!previousCategory[currentCategory]) {
+        // eslint-disable-next-line no-param-reassign
+        // @ts-ignore
         // eslint-disable-next-line no-param-reassign
         previousCategory[currentCategory] = { categoryTree: [] };
 
@@ -27,20 +38,23 @@ categoryPaths.forEach((categoryPath) => {
           .replace(/\s+/g, '-')
           .replace(/(default-category\/)/g, '');
 
-        previousCategory.categoryTree.push({
+        // @ts-ignore
+        previousCategory.categoryTree?.push({
           title: currentCategory,
           level: currentIndex,
           url,
           children: previousCategory[currentCategory].categoryTree,
         });
       }
+      // @ts-ignore
       return previousCategory[currentCategory];
     },
     level
   );
 });
 
-const generateTemplate = (category, accumulatedTemplate = '') => {
+// @ts-ignore
+const generateTemplate = (category: Category, accumulatedTemplate = '') => {
   let template = '';
   switch (category.level) {
     case 0:
@@ -53,7 +67,7 @@ const generateTemplate = (category, accumulatedTemplate = '') => {
   ${
     category.children.length > 0
       ? `
-  <div class='menu-content-wrap'>
+  <div class='menu-content-wrap'> 
     <div class='menu-content'>
       {{category2}}
     </div>
@@ -112,6 +126,9 @@ const generateTemplate = (category, accumulatedTemplate = '') => {
   return template.replace(`{{category${category.level + 1}}}`, '');
 };
 
-const finalBrick = generateTemplate(categoryTree[0], brickTemplate);
+console.log(generateTemplate(categoryTree[0], brickTemplate));
 
-fs.writeFileSync('./src/output/brick.html', finalBrick);
+// fs.writeFileSync(
+//   './src/output/brick.html',
+//   generateTemplate(first, brickTemplate)
+// );
