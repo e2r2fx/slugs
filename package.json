@@ -1,25 +1,15 @@
 {
-  "name": "slugs",
-  "version": "2.0.0",
-  "description": "Slugify a list of names",
-  "main": "src/server.ts",
+  "name": "brick_gen",
+  "version": "1.0.0",
+  "description": "Generate flexshopper tm_headerlink static block dynamically",
+  "main": "src/brickGen.js",
   "scripts": {
-    "begin-slugging:dev": "ts-node-dev --respawn src/slugs.ts",
     "begin-brickGen:dev": "nodemon --config ./nodemon.json src/brickGen.js",
-    "build": "tsc"
+    "begin-brickGen:prod": "node src/brickGen.js"
   },
   "author": "e2r2fx",
   "license": "MIT",
   "devDependencies": {
-    "@types/cli-progress": "^3.9.2",
-    "@types/json2csv": "^5.0.3",
-    "@types/node": "^16.11.26",
-    "@types/progress-stream": "^2.0.2",
-    "@types/randomstring": "^1.1.8",
-    "@types/stream-chain": "^2.0.1",
-    "@types/stream-json": "^1.7.2",
-    "@typescript-eslint/eslint-plugin": "^5.17.0",
-    "@typescript-eslint/parser": "^5.17.0",
     "eslint": "^8.12.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.5.0",

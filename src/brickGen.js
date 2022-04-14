@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const fs = require('fs');
 
 const data = fs.readFileSync('./src/data/categories.json', 'utf-8');
