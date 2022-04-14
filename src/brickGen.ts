@@ -21,36 +21,29 @@ const level = { categoryTree };
 
 categoryPaths.forEach((categoryPath: string) => {
   const categoryPathArray = categoryPath.split('/');
-  categoryPathArray.reduce<Record<Category, string>>(
-    (previousCategory, currentCategory: string, currentIndex) => {
-      // @ts-ignore
-      if (!previousCategory[currentCategory]) {
-        // eslint-disable-next-line no-param-reassign
-        // @ts-ignore
-        // eslint-disable-next-line no-param-reassign
-        previousCategory[currentCategory] = { categoryTree: [] };
+  categoryPathArray.reduce((acc, currentCategory: string, currentIndex) => {
+    if (!acc[currentCategory]) {
+      acc[currentCategory] = { categoryTree: [] };
 
-        // generate category url
-        const url = categoryPathArray
-          .slice(0, currentIndex + 1)
-          .join('/')
-          .toLowerCase()
-          .replace(/\s+/g, '-')
-          .replace(/(default-category\/)/g, '');
+      // generate category url
+      const url = categoryPathArray
+        .slice(0, currentIndex + 1)
+        .join('/')
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/(default-category\/)/g, '');
 
-        // @ts-ignore
-        previousCategory.categoryTree?.push({
-          title: currentCategory,
-          level: currentIndex,
-          url,
-          children: previousCategory[currentCategory].categoryTree,
-        });
-      }
       // @ts-ignore
-      return previousCategory[currentCategory];
-    },
-    level
-  );
+      acc.categoryTree?.push({
+        title: currentCategory,
+        level: currentIndex,
+        url,
+        children: acc[currentCategory].categoryTree,
+      });
+    }
+    // @ts-ignore
+    return acc[currentCategory];
+  }, level);
 });
 
 // @ts-ignore
