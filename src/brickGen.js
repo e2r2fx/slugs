@@ -13,31 +13,28 @@ const level = { categoryTree };
 
 categoryPaths.forEach((categoryPath) => {
   const categoryPathArray = categoryPath.split('/');
-  categoryPathArray.reduce(
-    (previousCategory, currentCategory, currentIndex) => {
-      if (!previousCategory[currentCategory]) {
-        // eslint-disable-next-line no-param-reassign
-        previousCategory[currentCategory] = { categoryTree: [] };
+  categoryPathArray.reduce((acc, currentCategory, currentIndex) => {
+    if (!acc[currentCategory]) {
+      // eslint-disable-next-line no-param-reassign
+      acc[currentCategory] = { categoryTree: [] };
 
-        // generate category url
-        const url = categoryPathArray
-          .slice(0, currentIndex + 1)
-          .join('/')
-          .toLowerCase()
-          .replace(/\s+/g, '-')
-          .replace(/(default-category\/)/g, '');
+      // generate category url
+      const url = categoryPathArray
+        .slice(0, currentIndex + 1)
+        .join('/')
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/(default-category\/)/g, '');
 
-        previousCategory.categoryTree.push({
-          title: currentCategory,
-          level: currentIndex,
-          url,
-          children: previousCategory[currentCategory].categoryTree,
-        });
-      }
-      return previousCategory[currentCategory];
-    },
-    level
-  );
+      acc.categoryTree.push({
+        title: currentCategory,
+        level: currentIndex,
+        url,
+        children: acc[currentCategory].categoryTree,
+      });
+    }
+    return acc[currentCategory];
+  }, level);
 });
 
 const generateTemplate = (category, accumulatedTemplate = '') => {
